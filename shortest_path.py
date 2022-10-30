@@ -61,3 +61,112 @@
 #         print(distance[i])
 #
 
+# 개선된 다익스트라 알고리즘 소스코드
+# import heapq
+# import sys
+# input = sys.stdin.readline
+# INF = int(1e9)
+#
+# # 노드의 개수, 간선의 개수 입력받기
+# n,m = map(int,input().split())
+# start = int(input())
+# graph = [[] for _ in range(n+1)]
+# distance = [INF] * (n+1)
+#
+# for _ in range(m):
+#     a,b,c = map(int,input().split())
+#     graph[a].append((b,c))
+#
+# def dijkstra(start):
+#     q = []
+#     # 시작 노드로 가기 위한 최단 경로는 0으로 설정하여, 큐에 삽입
+#     heapq.heappush(q,(0,start))
+#     distance[start] = 0
+#     while q:   # 큐가 비어있지 않다면
+#         # 가장 최단 거리가 짧은 노드에 대한 정보 꺼내기
+#         dist, now = heapq.heappop(q)
+#         # 현재 노드가 이미 처리된 적이 있는 노드라면 무시
+#         if distance[now] < dist:
+#             continue
+#         # 현재 노드와 연결된 다른 인접한 노드들을 확인
+#         for i in graph[now]:
+#             cost = dist + i[1]
+#             # 현재 노드를 거쳐서, 다른 노드로 이동하는 거리가 더 짧은 경우
+#             if cost < distance[i[0]]:
+#                 distance[i[0]] = cost
+#                 heapq.heappush(cost, i[0])
+#
+# dijkstra(start)
+#
+# for i in range(1,n+1):
+#     if distance[i] == INF:
+#         print("INFINITY")
+#     else:
+#         print(distance[i])
+
+# 플로이드 워셜 알고리즘
+# INF = int(1e9)
+#
+# n = int(input())
+# m = int(input())
+#
+# # 2차원 리스트를 만들고, 모든 값을 무한으로 초기화
+# graph = [[INF] * (n+1) for _ in range(n+1)]
+#
+# # 자기 자신에서 자기 자신으로 가는 비용은 0으로 초기화
+# for a in range(1,n+1):
+#     for b in range(1,n+1):
+#         if a == b:
+#             graph[a][b] = 0
+#
+# # 각 간선에 대한 정보를 입력받아, 그 값으로 초기화
+# for _ in range(m):
+#     # A에서 B로 가는 비용은 C라고 설정
+#     a,b,c, = map(int,input().split())
+#     graph[a][b] = c
+#
+# # 점화식에 따라 플로이드 워셜 알고리즘을 수행
+# for k in range(1,n+1):
+#     for a in range(1,n+1):
+#         for b in range(1,n+1):
+#             graph[a][b] = min(graph[a][b], graph[a][k] + graph[k][b])
+#
+# # 수행된 결과를 출력
+# for a in range(1,n+1):
+#     for b in range(1,n+1):
+#         # 도달할 수 없는 경우, 무한이라고 출력
+#         if graph[a][b] == INF:
+#             print("INFINITY", end=" ")
+#         else:
+#             print(graph[a][b], end=" ")
+#     print()
+
+# 미래도시
+# INF = int(1e9)
+#
+# n, m = map(int,input().split())
+# graph = [[INF] * (n+1) for _ in range(n+1)]
+#
+# for a in range(1,n+1):
+#     for b in range(1,n+1):
+#         if a == b:
+#             graph[a][b] = 0
+#
+# for _ in range(m):
+#     a,b = map(int,input().split())
+#     graph[a][b] = 1
+#     graph[b][a] = 1
+#
+# x, k = map(int,input().split())
+#
+# for k in range(1,n+1):
+#     for a in range(1,n+1):
+#         for b in range(1, n+1):
+#             graph[a][b] = min(graph[a][b], graph[a][k] + graph[k][b])
+#
+# distance = graph[1][k] + graph[k][x]
+#
+# if distance >= INF:
+#     print("-1")
+# else:
+#     print(distance)
